@@ -19,8 +19,8 @@ if not cap.isOpened():
 else:
     capWidth, capHeight = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-background = cargar_archivo('improved-inivisbility-cloak/assets/background.jpg', 'El archivo de fondo')
-model = YOLO('improved-inivisbility-cloak/models/20231117_best.pt') if os.path.exists('improved-inivisbility-cloak/models/20231117_best.pt') else None
+background = cargar_archivo('yolov8-inivisbility-cloak/assets/background.jpg', 'El archivo de fondo')
+model = YOLO('yolov8-inivisbility-cloak/models/20231117_best.pt') if os.path.exists('yolov8-inivisbility-cloak/models/20231117_best.pt') else None
 
 while True:
     ret, frame = cap.read()

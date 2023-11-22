@@ -16,7 +16,7 @@ def model_predictions(model, img):
     return model.predict(img, imgsz=640, conf=0.78)
 
 # Load the model
-model_path = check_file_path("improved-inivisbility-cloak/models/20231117_best.pt")      
+model_path = check_file_path("yolov8-inivisbility-cloak/models/20231117_best.pt")      
 model = model_loading(model_path)
 
 # Open video camera, the index depends on the computer's setup

@@ -31,9 +31,9 @@ def process_img(img_path, masking):
     mask_formatted = cv2.bitwise_and(img_resize, img_resize, mask=masking)
     plot_data(cv2.cvtColor(mask_formatted, cv2.COLOR_BGR2RGB))
 
-model = check_file_path('improved-inivisbility-cloak/models/20231117_best.pt')
-red_cloak = check_file_path('improved-inivisbility-cloak/assets/red_cloak_testing.jpg')
-background = check_file_path('improved-inivisbility-cloak/assets/background.jpg')
+model = check_file_path('yolov8-inivisbility-cloak/models/20231117_best.pt')
+red_cloak = check_file_path('yolov8-inivisbility-cloak/assets/red_cloak_testing.jpg')
+background = check_file_path('yolov8-inivisbility-cloak/assets/background.jpg')
 
 predictions = model_prediction(model, red_cloak)
 masks = load_model_masks(predictions)

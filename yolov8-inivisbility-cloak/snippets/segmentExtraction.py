@@ -35,11 +35,11 @@ def resize_and_apply_mask(original, mask, target_size=(480, 640)):
 
 def main():
     # Check and load the YOLO red cloak model
-    model_path = check_file_path("improved-inivisbility-cloak/models/20231117_best.pt")
+    model_path = check_file_path("yolov8-inivisbility-cloak/models/20231117_best.pt")
     model = model_loading(model_path)
 
     # Make predictions and get masks
-    image_path = 'improved-inivisbility-cloak/assets/red_cloak_testing.jpg'
+    image_path = 'yolov8-inivisbility-cloak/assets/red_cloak_testing.jpg'
     results = model_predictions(model, image_path)
     result = results[0]
     masks = result.masks
