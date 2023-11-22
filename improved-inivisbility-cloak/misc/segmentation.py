@@ -1,31 +1,46 @@
 import cv2
 from ultralytics import YOLO
+import os
 
-# Leer modelo
-model = YOLO("improved-inivisbility-cloak/models/20231117_best.pt")      
+def check_file_path(file_path):
+    if os.path.exists(file_path):
+        return file_path
+    else:
+        print(f"Error: the file '{file_path}' does not exist.")
+        exit()
 
-# Abrir camara de video, el indice depende de cada equipo de computo
-videoInput = cv2.VideoCapture(0)
+def model_loading(model_path):
+    return YOLO(model_path)
+
+def model_predictions(model, img):
+    return model.predict(img, imgsz=640, conf=0.78)
+
+# Load the model
+model_path = check_file_path("improved-inivisbility-cloak/models/20231117_best.pt")      
+model = model_loading(model_path)
+
+# Open video camera, the index depends on the computer's setup
+video_input = cv2.VideoCapture(0)
 
 while True:
-    # Lee nuestros fotogramas
-    ret, frame = videoInput.read()
+    # Read frames
+    ret, frame = video_input.read()
 
-    # Leemos los resultados para cada fotograma y su preduccion
-    predicctions = model.predict(frame, imgsz = 640, conf = 0.78)
+    # Get predictions for each frame
+    predictions = model_predictions(model, frame)
 
-    # Visualizar  resultados
-    labels = predicctions[0].plot()
-    for predicction in predicctions:
-        boxes = predicction.boxes  # Boxes object for bbox outputs
-        masks = predicction.masks  # Masks object for segmentation masks outputs
-        
-    # Mostramos nuestros fotogramas
+    # Display results
+    labels = predictions[0].plot()
+    for prediction in predictions:
+        boxes = prediction.boxes
+        masks = prediction.masks
+    
+    # Show frames
     cv2.imshow("Segmentation", labels)
     
-    # Cerrar nuestro programa
+    # Exit the program
     if cv2.waitKey(1) == 27:
         break        
 
-videoInput.release()
+video_input.release()
 cv2.destroyAllWindows()

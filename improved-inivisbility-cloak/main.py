@@ -1,52 +1,44 @@
 import cv2
 from ultralytics import YOLO
-import numpy as np  
+import numpy as np
+import os
 
-# Iniciar la cámara (0 representa la cámara predeterminada)
+# Función para cargar archivos con verificación
+def cargar_archivo(ruta, mensaje_error):
+    if os.path.exists(ruta):
+        return cv2.resize(cv2.imread(ruta), (capHeight, capWidth))
+    else:
+        print(f"Error: {mensaje_error} '{ruta}' no existe.")
+        return None
+
 cap = cv2.VideoCapture(0)
 
-# Capturar la imagen de fondo sin el objeto que deseas hacer invisible
-background = cv2.imread('improved-inivisbility-cloak/assets/background.jpg')  # Reemplaza con tu imagen de fondo
-background = cv2.resize(background, (640, 480))  # Ajusta el tamaño según tu cámara
+if not cap.isOpened():
+    print("Error: No se pudo abrir la cámara.")
+    exit()
+else:
+    capWidth, capHeight = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-# Leer nuestro modelo YOLO
-model = YOLO("improved-inivisbility-cloak/models/20231117_best.pt")
+background = cargar_archivo('improved-inivisbility-cloak/assets/background.jpg', 'El archivo de fondo')
+model = YOLO('improved-inivisbility-cloak/models/20231117_best.pt') if os.path.exists('improved-inivisbility-cloak/models/20231117_best.pt') else None
 
 while True:
-    # Capturar un cuadro de la cámara
     ret, frame = cap.read()
-
     if not ret:
         break
 
-    # Realizar la detección y segmentación
-    resultados = model.predict(frame, imgsz=640, conf=0.78 )
+    resultados = model.predict(frame, imgsz=capWidth, conf=0.78) if model else None
+    masks = resultados[0].masks if resultados else None
+    poligono = np.zeros((capWidth, capHeight), dtype="uint8") if masks is None else masks.data[0].cpu().numpy().astype("uint8")
+    poligono = cv2.resize(poligono, (capHeight, capWidth))
+    background_masked = cv2.bitwise_and(background, background, mask=poligono) if background is not None else None
+    frame = cv2.resize(frame, (capHeight, capWidth))
+    final_result = cv2.add(frame, background_masked) if background_masked is not None else frame
 
-    # Mostrar resultados
-    for result in resultados:
-        masks = result.masks  # Obtener las máscaras de segmentación
-       
-
-    if masks is None:
-        poligono=np.zeros((480,640)).astype("uint8")
-    else:
-        poligono=masks.masks[0].numpy()
-        poligono=poligono.astype("uint8")
-    
-  
-    # Tomar la parte de la imagen de fondo que coincide con la máscara de segmentación
-    background_masked = cv2.bitwise_and(background, background, mask=poligono)
-
-    # Combinar ambas partes para obtener el efecto deseado
-    final_result = cv2.add(frame, background_masked)
-
-    # Mostrar el resultado
     cv2.imshow('Invisibility Cloak', final_result)
 
-    # Romper el bucle si se presiona la tecla 'q'
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-# Liberar la cámara y cerrar todas las ventanas
 cap.release()
 cv2.destroyAllWindows()
