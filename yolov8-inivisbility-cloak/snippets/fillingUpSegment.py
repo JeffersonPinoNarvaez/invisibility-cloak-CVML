@@ -27,7 +27,7 @@ def load_model_masks(data):
 
 def process_img(img_path, masking):
     image = cv2.imread(img_path)
-    img_resize = cv2.resize(image, (480, 640))
+    img_resize = cv2.resize(image, (640, 480))
     mask_formatted = cv2.bitwise_and(img_resize, img_resize, mask=masking)
     plot_data(cv2.cvtColor(mask_formatted, cv2.COLOR_BGR2RGB))
 

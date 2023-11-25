@@ -27,7 +27,7 @@ def show_mask(mask):
 def convert_to_uint8(data):
     return np.uint8(data)
 
-def resize_and_apply_mask(original, mask, target_size=(480, 640)):
+def resize_and_apply_mask(original, mask, target_size=(640, 480)):
     img_resize = cv2.resize(original, target_size)
     mask_formatted = cv2.bitwise_and(img_resize, img_resize, mask=mask)
     plt.imshow(cv2.cvtColor(mask_formatted, cv2.COLOR_BGR2RGB))

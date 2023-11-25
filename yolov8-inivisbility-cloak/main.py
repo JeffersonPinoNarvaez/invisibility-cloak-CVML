@@ -29,7 +29,7 @@ while True:
 
     resultados = model.predict(frame, imgsz=capWidth, conf=0.78) if model else None
     masks = resultados[0].masks if resultados else None
-    poligono = np.zeros((capWidth, capHeight), dtype="uint8") if masks is None else masks.data[0].cpu().numpy().astype("uint8")
+    poligono = np.zeros((capWidth, capHeight), dtype="uint8") if masks is None else (masks.data[0].cpu().numpy().astype("uint8")*255)
     poligono = cv2.resize(poligono, (capHeight, capWidth))
     background_masked = cv2.bitwise_and(background, background, mask=poligono) if background is not None else None
     frame = cv2.resize(frame, (capHeight, capWidth))
