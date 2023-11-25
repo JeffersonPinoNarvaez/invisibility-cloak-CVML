@@ -1,0 +1,3 @@
+# Ignorar carpetas generadas localmente
+runs/
+__pycache__/
