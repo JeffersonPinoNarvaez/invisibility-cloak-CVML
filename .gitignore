@@ -1,3 +1,25 @@
-# Ignorar carpetas generadas localmente
-runs/
-__pycache__/
+# Archivos y carpetas generadas automáticamente
+.vagrant/
+.vagrant.d/
+*.box
+*.vmdk
+*.vmx
+*.vagrant
+
+# Archivos de registro y estado de Vagrant
+Vagrantfile.local
+.vagrant/
+
+# Archivos de configuración de Vagrant
+.vagrant/
+
+# Carpetas de provisionamiento (opcional, dependiendo de tu configuración)
+provision/
+
+# Archivos y carpetas específicas de macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Archivos de iconos personalizados
+Icon?
