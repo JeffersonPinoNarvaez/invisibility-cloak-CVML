@@ -1,4 +1,14 @@
 
+# Implementing an invisibility cloak using YOLO 8 in Computer Vision
+
+In this repo we will learn how to create our own invisibility cloak using YOLO8 library. This project takes advantes of a field called Computer Vision that allows us to play with images, pre-proceses and large trained models.
+
+We need to have already installed the following technical requirements in our env:
+- Python >= 3.11.3
+- pip >= 23.1.2
+
+
+
 ## Installing minimun  technical requirements:
 
 **Installing Python3.1.5 in our system:**
