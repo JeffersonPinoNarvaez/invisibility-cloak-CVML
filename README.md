@@ -1,5 +1,5 @@
 
-# Implementing an invisibility cloak using YOLO 8 in Computer Vision
+# Implementing an invisibility cloak using YOLOv8 and Computer Vision
 
 In this repo we will learn how to create our own invisibility cloak using YOLO8 library. This project takes advantes of a field called Computer Vision that allows us to play with images, pre-proceses and large trained models.
 
@@ -77,12 +77,12 @@ This command will display the pip version installed on your system.
 
 Install with pip:
 ```bash
-  pip install yolov5
+  pip install yolov8
 ```
 
 Check Installation:
 ```bash
-  print("YOLOv8 is installed.") if __import__('yolov5', globals(), locals(), [], 0) else print("YOLOv8 is not installed.")
+  print("YOLOv8 is installed.") if __import__('yolov8', globals(), locals(), [], 0) else print("YOLOv8 is not installed.")
 ```
 This script will print out "YOLOv8 is installed" if the YOLOv8 library was installed right.
 
